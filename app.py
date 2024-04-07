@@ -12,6 +12,9 @@ def main():
     stability_options = ["All", "Stable", "Unstable"]
     selected_stability = st.sidebar.selectbox("Select Stability:", stability_options)
 
+    # Load the dataset
+    data = load_data()
+
     # Filter data based on selected stability
     if selected_stability == "All":
         filtered_data = data
@@ -39,25 +42,25 @@ def main():
 
     # Perform prediction based on user input (if all inputs are provided)
     if st.button("Predict Power Generation"):
-        # Perform prediction logic here
         power_prediction = predict_power_generation(air_temperature, pressure, wind_speed, filtered_data, selected_date, selected_time)
         st.write(f"Predicted Power Generation: {power_prediction:.6f} MW")  # Format prediction to 6 decimal places
 
     # Perform prediction for stability based on user input
     if st.button("Predict Stability"):
-        # Perform prediction logic here
         stability_prediction = predict_stability(pressure, wind_speed, air_temperature, filtered_data, selected_date, selected_time)
         st.write(f"Predicted Stability: {stability_prediction}")
 
-    # # Add dropdown to select last 5 years of data
-    # years = list(range(5, 0, -1))
-    # selected_year = st.selectbox("Select Last N Years of Data:", years)
-    # st.write(f"You selected last {selected_year} years of data")
-
     # Add section for Power BI dashboard
     st.subheader("Power BI Dashboard")
-    power_bi_url = "<iframe title='HACKWAVE-01-DASH' width='600' height='636' src='https://app.powerbi.com/view?r=eyJrIjoiNjE3N2IzNTUtNzlhZi00NGVmLWI3MzUtODY1YjJiZmJhYzZiIiwidCI6IjNkNmVhYjlkLTc5MmMtNGFmOS05NDYwLTc5MzljYTkwYjZhYiJ9&pageName=ReportSection' frameborder='0' allowFullScreen='true'></iframe>"
-    st.components.v1.html(power_bi_url, height=636)
+    power_bi_dashboard = """
+    <iframe width="800" height="506" src="https://app.powerbi.com/view?r=eyJrIjoiNjE3N2IzNTUtNzlhZi00NGVmLWI3MzUtODY1YjJiZmJhYzZiIiwidCI6IjNkNmVhYjlkLTc5MmMtNGFmOS05NDYwLTc5MzljYTkwYjZhYiJ9&pageName=ReportSection" frameborder="0" allowFullScreen="true"></iframe>
+    """
+    st.markdown(power_bi_dashboard, unsafe_allow_html=True)
+
+# Function to load the dataset
+def load_data():
+    # Implement this function to load your dataset
+    return pd.read_csv("C:\\Users\\admin\\Downloads\\Hackwave-vs\\9_Sustainability_and_Environment\\final_data.csv")  # Update with your dataset path
 
 # Function to perform power generation prediction
 def predict_power_generation(air_temperature, pressure, wind_speed, filtered_data, selected_date, selected_time):
