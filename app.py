@@ -51,10 +51,14 @@ def main():
         power_prediction = predict_power_generation(air_temperature, pressure, wind_speed, filtered_data, selected_date, selected_time)
         st.write(f"Predicted Power Generation: {power_prediction:.6f} MW")  # Format prediction to 6 decimal places
 
-    # Perform prediction for stability based on user input
+    # # Perform prediction for stability based on user input
     if st.button("Predict Stability"):
         stability_prediction = predict_stability(pressure, wind_speed, air_temperature, filtered_data, selected_date, selected_time)
         st.write(f"Predicted Stability: {stability_prediction}")
+
+    if st.button("Predict Power Generation from Parameter"):
+        power_prediction_param = predict_power_generation_param(air_temperature, pressure, wind_speed, filtered_data )
+        st.write(f"Predicted Power Generation: {power_prediction_param[0]}")  # Format prediction to 6 decimal places
 
     # Add section for Power BI dashboard
     st.subheader("Power BI Dashboard")
@@ -66,7 +70,7 @@ def main():
 # Function to load the dataset
 def load_data():
     # Implement this function to load your dataset
-    return pd.read_csv("C:\\Users\\admin\\Downloads\\Hackwave-vs\\9_Sustainability_and_Environment\\final_data.csv")  # Update with your dataset path
+    return pd.read_csv("C:\\Users\\admin\\Downloads\\Hackwave-vs\\9_Sustainability_and_Environment\\gbr_updated_dataset.csv")  # Update with your dataset path
 
 # Function to perform power generation prediction
 def predict_power_generation(air_temperature, pressure, wind_speed, filtered_data, selected_date, selected_time):
@@ -106,7 +110,7 @@ def predict_stability(pressure, wind_speed, air_temperature, filtered_data, sele
     
     return stability
 
-def predict_power_generation_param(air_temperature, pressure, wind_speed, filtered_data, selected_date, selected_time):
+def predict_power_generation_param(air_temperature, pressure, wind_speed, filtered_data):
     # Prepare the input data for prediction
     new_data = [[air_temperature, pressure, wind_speed]]  # Replace feature1, feature2, ... with actual values
 
