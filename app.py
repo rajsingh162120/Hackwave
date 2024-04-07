@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from joblib import dump, load
-
+from final import predict_custom_input
 # Load the trained model
 model = load('gradient_boosting_model.joblib')
 
@@ -46,15 +46,15 @@ def main():
     selected_date = selected_date.strftime("%d-%m-%Y")
     selected_time = st.time_input("Select Time (optional):")
 
-    # Perform prediction based on user input (if all inputs are provided)
-    if st.button("Predict Power Generation"):
-        power_prediction = predict_power_generation(air_temperature, pressure, wind_speed, filtered_data, selected_date, selected_time)
-        st.write(f"Predicted Power Generation: {power_prediction:.6f} MW")  # Format prediction to 6 decimal places
+    # # Perform prediction based on user input (if all inputs are provided)
+    # if st.button("Predict Power Generation"):
+    #     power_prediction = predict_power_generation(air_temperature, pressure, wind_speed, filtered_data, selected_date, selected_time)
+    #     st.write(f"Predicted Power Generation: {power_prediction:.6f} MW")  # Format prediction to 6 decimal places
 
-    # # Perform prediction for stability based on user input
-    if st.button("Predict Stability"):
-        stability_prediction = predict_stability(pressure, wind_speed, air_temperature, filtered_data, selected_date, selected_time)
-        st.write(f"Predicted Stability: {stability_prediction}")
+    # # # Perform prediction for stability based on user input
+    # if st.button("Predict Stability"):
+    #     stability_prediction = predict_stability(pressure, wind_speed, air_temperature, filtered_data, selected_date, selected_time)
+    #     st.write(f"Predicted Stability: {stability_prediction}")
 
     if st.button("Predict Power Generation from Parameter"):
         power_prediction_param = predict_power_generation_param(air_temperature, pressure, wind_speed, filtered_data )
@@ -112,11 +112,8 @@ def predict_stability(pressure, wind_speed, air_temperature, filtered_data, sele
 
 def predict_power_generation_param(air_temperature, pressure, wind_speed, filtered_data):
     # Prepare the input data for prediction
-    new_data = [[air_temperature, pressure, wind_speed]]  # Replace feature1, feature2, ... with actual values
-
-    # Make predictions
-    predictions = model.predict(new_data)
-
+    
+    predictions = predict_custom_input(air_temperature, pressure, wind_speed)
     # Display predictions
     print("Predicted power generation:", predictions)
     
