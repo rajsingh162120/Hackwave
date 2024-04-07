@@ -1,5 +1,11 @@
 import streamlit as st
 import pandas as pd
+from joblib import dump, load
+
+# Load the trained model
+model = load('gradient_boosting_model.joblib')
+
+
 
 # Define Streamlit app
 def main():
@@ -99,6 +105,18 @@ def predict_stability(pressure, wind_speed, air_temperature, filtered_data, sele
     stability = filtered_data['stability']
     
     return stability
+
+def predict_power_generation_param(air_temperature, pressure, wind_speed, filtered_data, selected_date, selected_time):
+    # Prepare the input data for prediction
+    new_data = [[air_temperature, pressure, wind_speed]]  # Replace feature1, feature2, ... with actual values
+
+    # Make predictions
+    predictions = model.predict(new_data)
+
+    # Display predictions
+    print("Predicted power generation:", predictions)
+    
+    return predictions
 
 # Load the dataset
 data = pd.read_csv("C:\\Users\\admin\\Downloads\\Hackwave-vs\\9_Sustainability_and_Environment\\final_data.csv")  # Update with your dataset path
