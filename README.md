@@ -1,6 +1,3 @@
-Thank you for providing the detailed problem statement. Based on this, I've revised the README with the specific points mentioned:
-
----
 
 # Power Grid Stability Prediction
 
